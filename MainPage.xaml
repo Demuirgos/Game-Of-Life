@@ -21,19 +21,25 @@
             <AppBarButton x:Name="New" Click="New_Click">
                 <Grid>
                     <SymbolIcon Symbol="NewWindow" VerticalAlignment="Top"/>
-                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="New" Margin="-31,-14,-28,-30"/>
+                </Grid>
+            </AppBarButton>
+            <AppBarButton x:Name="Randomise" Click="Randomise_Click">
+                <Grid>
+                    <SymbolIcon Symbol="Remote" VerticalAlignment="Top"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Randomise" Margin="-31,-14,-28,-30"/>
                 </Grid>
             </AppBarButton>
             <AppBarButton x:Name="Reset" Click="Reset_Click">
                 <Grid>
                     <SymbolIcon Symbol="Undo" VerticalAlignment="Top"/>
-                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Reset" Margin="-31,-14,-28,-30"/>
                 </Grid>
             </AppBarButton>
             <AppBarButton x:Name="BeginPlay" Click="BeginPlay_Click">
                 <Grid>
                     <SymbolIcon Symbol="Play" VerticalAlignment="Top"/>
-                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Begin" Margin="-31,-14,-28,-30"/>
                 </Grid>
             </AppBarButton>
             <AppBarElementContainer>

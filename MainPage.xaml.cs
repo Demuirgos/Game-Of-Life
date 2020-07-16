@@ -224,5 +224,14 @@ namespace GameOfLifeCS
             show();
             this.isInit = true;
         }
+
+        private void Randomise_Click(object sender, RoutedEventArgs e)
+        {
+            this.grid.Clear();
+            this.Board.Children.Clear();
+            initGrid(true);
+            show();
+            this.isInit = true;
+        }
     }
 }
