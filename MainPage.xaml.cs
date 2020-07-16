@@ -24,19 +24,30 @@ namespace GameOfLifeCS
         public Windows.UI.Xaml.Shapes.Rectangle body;
         public int state;
         public int nextState;
-        public cell(int size)
+        public cell(int size,bool b = true)
         {
             this.body = new Windows.UI.Xaml.Shapes.Rectangle();
+            SolidColorBrush colorBrush = new SolidColorBrush();
+            colorBrush.Color= Windows.UI.Colors.DarkGray;
+            this.body.Stroke = colorBrush;
+            this.body.Tapped += Body_Tapped;
             this.body.Width = size; this.body.Height = size;
             Random rState = new Random();
-            this.state = rState.Next(2);
+            this.state = b?rState.Next(2):0;
             SolidColorBrush newBrush = new SolidColorBrush();
             if (this.state == 0)
-                newBrush.Color = Windows.UI.Colors.Black;
+                newBrush.Color = Windows.UI.Colors.DimGray;
             else
                 newBrush.Color = Windows.UI.Colors.White;
             this.body.Fill = newBrush;
         }
+
+        private void Body_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.state = (this.state+1)%2;
+            this.stateChaged(this);
+        }
+
         public void setState(int newState)
         {
             this.nextState = newState;
@@ -51,6 +62,7 @@ namespace GameOfLifeCS
     {
         int size;
         TimeSpan tick;
+        bool isInit;
         List<List<cell>> grid;
         DispatcherTimer innerClock;
         bool isAnimated;
@@ -65,33 +77,9 @@ namespace GameOfLifeCS
             this.grid = new List<List<cell>>();
             this.size = 25;
             this.isAnimated = false;
+            this.isInit = false;
             ScaleTransform scale = new ScaleTransform();
             this.Board.RenderTransform = scale;
-            //Window.Current.SizeChanged += new WindowSizeChangedEventHandler(resize);
-            //this.Board.Width = ((Frame)Window.Current.Content).ActualWidth;
-            //this.Board.Height = ((Frame)Window.Current.Content).ActualHeight;
-        }
-        private void resize(Object sender, Windows.UI.Core.WindowSizeChangedEventArgs args)
-        {
-            if (this.isAnimated)
-            {
-                this.innerClock.Stop();
-                double a, b, c, d;
-                a = ((Frame)Window.Current.Content).ActualHeight;
-                b = this.Board.ActualHeight;// * ((ScaleTransform)this.Board.RenderTransform).ScaleY;
-                c = ((Frame)Window.Current.Content).ActualWidth;
-                d = this.Board.ActualWidth;// * ((ScaleTransform)this.Board.RenderTransform).ScaleX;
-                double yFactor = a / b;
-                double xFactor = c / d;
-                ((ScaleTransform)this.Board.RenderTransform).ScaleX = xFactor;//((Frame)Window.Current.Content).ActualWidth / this.Board.ActualWidth;
-                ((ScaleTransform)this.Board.RenderTransform).ScaleY = yFactor;//((Frame)Window.Current.Content).ActualHeight / this.Board.ActualHeight;
-                this.innerClock.Start();
-            }
-            else
-            {
-                this.Board.Width= ((Frame)Window.Current.Content).ActualWidth;
-                this.Board.Height = ((Frame)Window.Current.Content).ActualHeight - 45;
-            }
         }
         private void tickTock(Object sender,Object e)
         {
@@ -113,22 +101,22 @@ namespace GameOfLifeCS
 
         private void BeginPlay_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.isAnimated)
+            if (this.isInit)
             {
-                this.isAnimated = true;
-                initGrid();
-                show();
-                this.innerClock.Start();
-            }
-            else
-            {
-                this.isAnimated = false;
-                this.innerClock.Stop();
-                this.grid.Clear();
-                this.Board.Children.Clear();
+                if (!this.isAnimated)
+                {
+                    this.isAnimated = true;
+                    show();
+                    this.innerClock.Start();
+                }
+                else
+                {
+                    this.isAnimated = false;
+                    this.innerClock.Stop();
+                }
             }
         }
-        private void initGrid()
+        private void initGrid(bool state)
         {
             int wCount, hCount;
             wCount = (int)(this.Board.ActualWidth+this.size) / size;
@@ -138,7 +126,7 @@ namespace GameOfLifeCS
                 List<cell> holder = new List<cell>();
                 for (var j = 0; j < wCount; j++)
                 {
-                    cell newCell = new cell(size);
+                    cell newCell = new cell(size, state);
                     newCell.stateChaged += new cell.stateChagedHandler(changeState);
                     holder.Add(newCell);
                 }
@@ -218,6 +206,23 @@ namespace GameOfLifeCS
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            this.grid.Clear();
+            this.Board.Children.Clear();
+            initGrid(false);
+            show();
+        }
+
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            this.grid.Clear();
+            this.Board.Children.Clear();
+            initGrid(false);
+            show();
+            this.isInit = true;
         }
     }
 }

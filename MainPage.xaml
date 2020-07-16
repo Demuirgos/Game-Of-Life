@@ -14,11 +14,25 @@
                 <SymbolIcon Symbol="Cancel"/>
             </Grid>
         </AppBarButton>
-        <Canvas x:Name="Board" Margin="0,0,0,40"/>
+        <Canvas x:Name="Board" Margin="0,0,0,40">
+            <TextBlock Text="Conway's Game Of Life" FontSize="123" Canvas.Left="100" Canvas.Top="175"></TextBlock>
+        </Canvas>
         <CommandBar VerticalAlignment="Bottom">
+            <AppBarButton x:Name="New" Click="New_Click">
+                <Grid>
+                    <SymbolIcon Symbol="NewWindow" VerticalAlignment="Top"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
+                </Grid>
+            </AppBarButton>
+            <AppBarButton x:Name="Reset" Click="Reset_Click">
+                <Grid>
+                    <SymbolIcon Symbol="Undo" VerticalAlignment="Top"/>
+                    <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
+                </Grid>
+            </AppBarButton>
             <AppBarButton x:Name="BeginPlay" Click="BeginPlay_Click">
                 <Grid>
-                    <SymbolIcon VerticalAlignment="Top"/>
+                    <SymbolIcon Symbol="Play" VerticalAlignment="Top"/>
                     <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Start" Margin="-31,-14,-28,-30"/>
                 </Grid>
             </AppBarButton>
